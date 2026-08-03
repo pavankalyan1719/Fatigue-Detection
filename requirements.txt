@@ -1,0 +1,8 @@
+Flask
+opencv-python-headless
+numpy
+pandas
+scikit-learn
+openpyxl
+gunicorn
+pynput
