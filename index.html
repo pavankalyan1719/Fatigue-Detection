@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Burnout & Fatigue Detection</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4facfe;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #007bff;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            float: left;
+            margin-left: 5%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Burnout & Fatigue Detection</h1>
+
+    <form action="/analyze_all" method="POST">
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Working Hours</label>
+        <input type="number" name="work" required>
+
+        <label>Sleep Hours</label>
+        <input type="number" name="sleep" required>
+
+        <button type="submit">Analyze + Face Scan</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
