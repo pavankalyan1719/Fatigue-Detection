@@ -79,8 +79,8 @@ def final_level(score):
 # ---------- EMAIL ----------
 def send_final_email(receiver, burnout, fatigue, final_score, level):
 
-    sender_email = "pavankalyankaturi3@gmail.com"
-    password = "fsrw umkt dsqb fcuc"
+    sender_email = "pavankalyanmid@gmail.com"
+    password = "xkrh yigv ietp wgxe"
 
     msg = MIMEMultipart()
     msg["From"] = sender_email
