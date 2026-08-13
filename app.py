@@ -77,10 +77,12 @@ def final_level(score):
 
 
 # ---------- EMAIL ----------
+# ---------- EMAIL ----------
+
 def send_final_email(receiver, burnout, fatigue, final_score, level):
 
-    sender_email = "pavankalyanmid@gmail.com"
-    password = "xkrh yigv ietp wgxe"
+    sender_email = os.environ.get("EMAIL_ADDRESS")
+    password = os.environ.get("EMAIL_PASSWORD")
 
     msg = MIMEMultipart()
     msg["From"] = sender_email
@@ -94,21 +96,26 @@ Final Stress Score: {final_score}%
 Stress Level: {level}
 
 Suggestions:
-- Take regular breaks
-- Maintain proper sleep
-- Reduce screen usage
-- Stay hydrated
+Take regular breaks
+Maintain proper sleep
+Reduce screen usage
+Stay hydrated
 """
 
     msg.attach(MIMEText(text, "plain"))
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
+
     server.login(sender_email, password)
-    server.sendmail(sender_email, receiver, msg.as_string())
+
+    server.sendmail(
+        sender_email,
+        receiver,
+        msg.as_string()
+    )
+
     server.quit()
-
-
 # ---------- ROUTES ----------
 @app.route("/")
 def home():
@@ -118,7 +125,6 @@ def home():
 # 🔥 SINGLE BUTTON ROUTE
 @app.route("/analyze_all", methods=["POST"])
 def analyze_all():
-
     email = request.form["email"]
     work = int(request.form["work"])
     sleep = int(request.form["sleep"])
