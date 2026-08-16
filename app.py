@@ -11,8 +11,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import threading
 import screen_tracker
-from fatigue_camera import detect_fatigue
+from fatigue_camera import detect_fatigue_from_image
 import activity_monitor
+
 
 app = Flask(__name__)
 
