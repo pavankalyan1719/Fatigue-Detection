@@ -9,7 +9,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #4facfe, #00f2fe);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,7 +20,7 @@
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
-            width: 350px;
+            width: 400px;
             text-align: center;
         }
 
@@ -36,6 +36,15 @@
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 14px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            text-align: left;
+            margin-left: 5%;
+            margin-top: 8px;
         }
 
         button {
@@ -54,11 +63,27 @@
             background: #007bff;
         }
 
-        label {
+        /* Camera */
+
+        #camera {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        #capture {
+            display: none;
+        }
+
+        #cameraStatus {
+            margin-top: 10px;
             font-size: 14px;
             color: #555;
-            float: left;
-            margin-left: 5%;
         }
 
     </style>
@@ -72,32 +97,193 @@
 
     <form action="/analyze_all" method="POST">
 
+        <!-- EMAIL -->
+
         <label>Email</label>
-        <input type="email" name="email" required>
+
+        <input
+            type="email"
+            name="email"
+            required
+        >
+
+
+        <!-- WORKING HOURS -->
 
         <label>Working Hours</label>
-        <input type="number" name="work" required>
+
+        <input
+            type="number"
+            name="work"
+            min="0"
+            max="24"
+            required
+        >
+
+
+        <!-- SLEEP HOURS -->
 
         <label>Sleep Hours</label>
-        <input type="number" name="sleep" required>
-        <button type="button" id="startCamera">
-    Start Camera
-</button>
-        
-        <video id="camera" autoplay playsinline></video>
-        <button type="button" id="capture">
-    Capture
-</button>
 
-        <button type="submit">Analyze + Face Scan</button>
-<script>
-navigator.mediaDevices.getUserMedia({
-    video: true
-})
-</script>
+        <input
+            type="number"
+            name="sleep"
+            min="0"
+            max="24"
+            required
+        >
+
+
+        <!-- START CAMERA -->
+
+        <button
+            type="button"
+            id="startCamera"
+        >
+            Start Camera
+        </button>
+
+
+        <!-- CAMERA PREVIEW -->
+
+        <video
+            id="camera"
+            autoplay
+            playsinline
+        ></video>
+
+
+        <!-- HIDDEN CANVAS -->
+
+        <canvas id="canvas"></canvas>
+
+
+        <!-- CAPTURE BUTTON -->
+
+        <button
+            type="button"
+            id="capture"
+        >
+            Capture
+        </button>
+
+
+        <!-- ANALYZE -->
+
+        <button
+            type="submit"
+        >
+            Analyze + Face Scan
+        </button>
+
+        <p id="cameraStatus">
+            Camera not started
+        </p>
+
     </form>
 
 </div>
+
+
+<script>
+
+    // Get HTML elements
+
+    const startCameraButton =
+        document.getElementById("startCamera");
+
+    const captureButton =
+        document.getElementById("capture");
+
+    const video =
+        document.getElementById("camera");
+
+    const canvas =
+        document.getElementById("canvas");
+
+    const cameraStatus =
+        document.getElementById("cameraStatus");
+
+
+    // Store camera stream
+
+    let cameraStream = null;
+
+
+    // START CAMERA
+
+    startCameraButton.addEventListener("click", async function() {
+
+        try {
+
+            cameraStream =
+                await navigator.mediaDevices.getUserMedia({
+                    video: true
+                });
+
+            video.srcObject = cameraStream;
+
+            video.style.display = "block";
+
+            captureButton.style.display = "block";
+
+            cameraStatus.innerText =
+                "Camera started. Position your face and click Capture.";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            cameraStatus.innerText =
+                "Camera permission denied or camera unavailable.";
+
+        }
+
+    });
+
+
+    // CAPTURE IMAGE
+
+    captureButton.addEventListener("click", function() {
+
+        if (!cameraStream) {
+
+            cameraStatus.innerText =
+                "Please start the camera first.";
+
+            return;
+
+        }
+
+
+        canvas.width =
+            video.videoWidth;
+
+        canvas.height =
+            video.videoHeight;
+
+
+        const context =
+            canvas.getContext("2d");
+
+
+        context.drawImage(
+            video,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        cameraStatus.innerText =
+            "Face captured successfully.";
+
+    });
+
+</script>
 
 </body>
 </html>
