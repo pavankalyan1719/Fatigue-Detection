@@ -1,7 +1,7 @@
 import cv2
 import time
 
-def detect_fatigue():
+def detect_fatigue_from_image(image)::
 
     face = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
