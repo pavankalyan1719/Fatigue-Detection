@@ -124,6 +124,7 @@ def home():
 
 # 🔥 SINGLE BUTTON ROUTE
 @app.route("/analyze_all", methods=["POST"])
+@app.route("/detect_fatigue", methods=["POST"])
 def analyze_all():
     email = request.form["email"]
     work = int(request.form["work"])
