@@ -80,9 +80,21 @@
 
         <label>Sleep Hours</label>
         <input type="number" name="sleep" required>
+        <button type="button" id="startCamera">
+    Start Camera
+</button>
+        
+        <video id="camera" autoplay playsinline></video>
+        <button type="button" id="capture">
+    Capture
+</button>
 
         <button type="submit">Analyze + Face Scan</button>
-
+<script>
+navigator.mediaDevices.getUserMedia({
+    video: true
+})
+</script>
     </form>
 
 </div>
