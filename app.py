@@ -125,7 +125,26 @@ def home():
 
 # 🔥 SINGLE BUTTON ROUTE
 @app.route("/analyze_all", methods=["POST"])
-@app.route("/detect_fatigue", methods=["POST"])
+@app.route("/detect_fatigue", methods=["POST"]
+def detect_fatigue():
+
+    if "image" not in request.files:
+        return {
+            "fatigue": False,
+            "error": "No image received"
+        }
+
+    image_file = request.files["image"]
+
+    image_bytes = image_file.read()
+
+    fatigue = detect_fatigue_from_image(
+        image_bytes
+    )
+
+    return {
+        "fatigue": fatigue
+    }
 def analyze_all():
     email = request.form["email"]
     work = int(request.form["work"])
